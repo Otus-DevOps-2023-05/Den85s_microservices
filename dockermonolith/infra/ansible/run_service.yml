@@ -1,0 +1,11 @@
+- hosts: all
+  
+  tasks:
+  - name: run reddit
+    docker_container:
+      name: reddit_app
+      image: denshunya/otus-reddit:1.0
+      state: started
+      restart_policy: on-failure
+      ports:
+       - "9292:9292"
