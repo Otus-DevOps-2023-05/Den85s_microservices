@@ -1,0 +1,33 @@
+
+*** These modified files were found in JOE when it aborted on Wed Oct 11 17:56:51 2023
+*** JOE was aborted by UNIX signal 1
+
+*** File '.terraformmc'
+provider_installation {
+  network_mirror {
+    url = "https://terraform-mirror.yandexcloud.net/"
+    include = ["registry.terraform.io/*/*"]
+  }
+  direct {
+    exclude = ["registry.terraform.io/*/*"]
+  }
+}
+
+*** File '(Unnamed)'
+install_reddit.sh
+README.md
+variables.json.example
+key.json
+key.json
+ubuntu16_app.json
+/home/denis/.terraformrc
+/home/denis/.terraformrc
+SECRET_KEY
+.terraformmc
+.terraformmc
+
+*** File '* Startup Log *'
+Processing '/etc/joe/joerc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/joerc
