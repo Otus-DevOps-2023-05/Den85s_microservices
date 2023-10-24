@@ -1,0 +1,16 @@
+FROM alpine:3.6
+ENV APP_HOME /app
+RUN apk update --no-cache \
+    && apk add --no-cache ruby ruby-dev ruby-bundler build-base \
+    && gem install bundler -v 2.3.0 --no-rdoc --no-ri  \
+    && mkdir $APP_HOME
+
+WORKDIR $APP_HOME
+
+ADD Gemfile* ./
+RUN bundle install
+ADD . $APP_HOME
+
+ENV POST_SERVICE_HOST=post_db POST_SERVICE_PORT=5000 COMMENT_SERVICE_HOST=comment_db COMMENT_SERVICE_PORT=9292
+
+CMD ["puma"]
