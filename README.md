@@ -18,5 +18,5 @@ Den85s microservices repository
 
 # Docker-4
  - Имя можно задать в docker-compose с помощью container_name
- - Запуск с использованием env-file docker-compose --env-file src.env -f docker-compose.yml up -d
- - Запуск с монтированными исходниками docker-compose --env-file src.env -f docker-compose.override.yml up -d
+ - Запуск с использованием env-file docker-compose --env-file .env -f docker-compose.yml up -d
+ - Запуск с монтированными исходниками docker-compose --env-file .env -f docker-compose.override.yml up -d
