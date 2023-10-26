@@ -15,3 +15,8 @@ Den85s microservices repository
 В процессе выполнения дз выполнено
  - созданы docker образы для приложения
  - проведены оптимизации Dockerfile для уменьшения образа
+
+# Docker-4
+ - Имя можно задать в docker-compose с помощью container_name
+ - Запуск с использованием env-file docker-compose --env-file src.env -f docker-compose.yml up -d
+ - Запуск с монтированными исходниками docker-compose --env-file src.env -f docker-compose.override.yml up -d
