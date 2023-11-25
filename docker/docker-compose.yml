@@ -1,0 +1,95 @@
+version: '3.3'
+services:
+  mongo:
+    container_name: mongo_db
+    image: mongo
+    volumes:
+      - post_db:/data/db
+    networks:
+      back_net:
+        aliases:
+          - post_db
+          - comment_db
+  ui:
+    container_name: ui
+    #build: ./ui
+    image: ${USERNAME}/ui:${UI_VERSION}
+    ports:
+      - ${UI_PORT}:9292/tcp
+    networks:
+      - front_net
+    depends_on:
+      - mongo
+      - post
+      - comment
+  post:
+    container_name: post
+    #build: ./post-py
+    image: ${USERNAME}/post:${POST_VERSION}
+    networks:
+      - back_net
+      - front_net
+    depends_on:
+      - mongo
+  comment:
+    container_name: comment
+    #build: ./comment
+    image: ${USERNAME}/comment:${COMMENT_VERSION}
+    networks:
+      - back_net
+      - front_net
+    depends_on:
+      - mongo
+
+  prometheus:
+    container_name: prometheus
+    image: ${USERNAME}/prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - prometheus_data:/prometheus
+    command: # Передаем доп параметры в командной строке
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=1d' # Задаем время хранения метрик в 1 ден
+    networks:
+      - prometheus_net
+      - back_net
+      - front_net
+
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter
+    user: root
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+    networks:
+      - prometheus_net
+  mongodb-exporter:
+    container_name: mongodb_exporter
+    image: percona/mongodb_exporter:0.39.0
+    command:
+      - '--mongodb.uri=mongodb://mongo_db:27017'
+      - '--mongodb.direct-connect=true'
+    ports:
+      - '9216:9216'
+    networks:
+      - back_net
+
+volumes:
+  post_db:
+  prometheus_data:
+
+
+networks:
+  back_net:
+#    name: back_net
+  front_net:
+#    name: front_net
+  prometheus_net:
