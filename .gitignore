@@ -6,7 +6,8 @@ variable.json
 *.tfvars
 .terraform/
 build_info.txt
-
+*.crt
+*.key
 
 ## python specific
 *.pyc
