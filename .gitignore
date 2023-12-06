@@ -6,7 +6,8 @@ variable.json
 *.tfvars
 .terraform/
 build_info.txt
-prometheus/
+*.crt
+*.key
 
 ## python specific
 *.pyc
