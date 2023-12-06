@@ -1,0 +1,10 @@
+---
+service:
+  internalPort: 5000
+  externalPort: 5000
+
+image:
+  repository: denshunya/post
+  tag: "2.0"
+
+databaseHost:
